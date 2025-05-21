@@ -29,7 +29,7 @@ def deletar_projeto(projeto_id: int, session: Session = Depends(get_session)):
 
 @router.put("/{projeto_id}", response_model=Projeto)
 def atualizar_projeto(projeto_id: int, projeto: Projeto, session: Session = Depends(get_session)):
-    projeto_atualizado = projeto_service.update_projeto(session, projeto_id, projeto.dict(exclude_unset=True))
+    projeto_atualizado = projeto_service.update_projeto(session, projeto_id, projeto)
     if not projeto_atualizado:
         raise HTTPException(status_code=404, detail="Projeto não encontrado")
     return projeto_atualizado

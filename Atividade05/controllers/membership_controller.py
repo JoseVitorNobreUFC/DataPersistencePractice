@@ -29,7 +29,7 @@ def deletar_membership(membership_id: int, session: Session = Depends(get_sessio
 
 @router.put("/{membership_id}", response_model=Membership)
 def atualizar_membership(membership_id: int, membership: Membership, session: Session = Depends(get_session)):
-    membership_atualizado = membership_service.update_membership(session, membership_id, membership.dict(exclude_unset=True))
+    membership_atualizado = membership_service.update_membership(session, membership_id, membership)
     if not membership_atualizado:
         raise HTTPException(status_code=404, detail="Membership não encontrado")
     return membership_atualizado

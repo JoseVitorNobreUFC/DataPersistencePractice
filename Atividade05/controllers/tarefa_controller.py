@@ -29,7 +29,7 @@ def deletar_tarefa(tarefa_id: int, session: Session = Depends(get_session)):
 
 @router.put("/{tarefa_id}", response_model=Tarefa)
 def atualizar_tarefa(tarefa_id: int, tarefa: Tarefa, session: Session = Depends(get_session)):
-    tarefa_atualizada = tarefa_service.update_tarefa(session, tarefa_id, tarefa.dict(exclude_unset=True))
+    tarefa_atualizada = tarefa_service.update_tarefa(session, tarefa_id, tarefa)
     if not tarefa_atualizada:
         raise HTTPException(status_code=404, detail="Tarefa não encontrada")
     return tarefa_atualizada

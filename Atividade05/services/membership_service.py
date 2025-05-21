@@ -21,16 +21,16 @@ def delete_membership(session: Session, membership_id: int) -> bool:
         return True
     return False
 
-def update_membership(session: Session, membership_id: int, membership_data: dict) -> Membership:
+def update_membership(session: Session, membership_id: int, membership_update: Membership) -> Membership:
     membership = session.get(Membership, membership_id)
     if not membership:
         return None
 
-    membership_data = membership.model_dump(exclude_unset=True)
+    membership_data = membership_update.model_dump(exclude_unset=True)
     for key, value in membership_data.items():
         setattr(membership, key, value)
 
-    session.add(membership_data)
+    session.add(membership)
     session.commit()
-    session.refresh(membership_data)
-    return membership_data
+    session.refresh(membership)
+    return membership

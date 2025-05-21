@@ -21,16 +21,16 @@ def delete_tarefa(session: Session, tarefa_id: int) -> bool:
         return True
     return False
 
-def update_tarefa(session: Session, tarefa_id: int, tarefa_data: dict) -> Tarefa:
+def update_tarefa(session: Session, tarefa_id: int, tarefa_update: Tarefa) -> Tarefa:
     tarefa = session.get(Tarefa, tarefa_id)
     if not tarefa:
         return None
 
-    tarefa_data = tarefa.model_dump(exclude_unset=True)
+    tarefa_data = tarefa_update.model_dump(exclude_unset=True)
     for key, value in tarefa_data.items():
         setattr(tarefa, key, value)
 
-    session.add(tarefa_data)
+    session.add(tarefa)
     session.commit()
-    session.refresh(tarefa_data)
-    return tarefa_data
+    session.refresh(tarefa)
+    return tarefa

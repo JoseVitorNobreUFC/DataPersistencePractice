@@ -21,16 +21,16 @@ def delete_projeto(session: Session, projeto_id: int) -> bool:
         return True
     return False
 
-def update_projeto(session: Session, projeto_id: int, projeto_data: dict) -> Projeto:
+def update_projeto(session: Session, projeto_id: int, projeto_update: Projeto) -> Projeto:
     projeto = session.get(Projeto, projeto_id)
     if not projeto:
         return None
 
-    projeto_data = projeto.model_dump(exclude_unset=True)
+    projeto_data = projeto_update.model_dump(exclude_unset=True)
     for key, value in projeto_data.items():
         setattr(projeto, key, value)
 
-    session.add(projeto_data)
+    session.add(projeto)
     session.commit()
-    session.refresh(projeto_data)
-    return projeto_data
+    session.refresh(projeto)
+    return projeto

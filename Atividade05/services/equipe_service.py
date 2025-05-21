@@ -21,17 +21,18 @@ def delete_equipe(session: Session, equipe_id: int) -> bool:
         return True
     return False
 
-def update_equipe(session: Session, equipe_id: int, equipe: Equipe) -> Equipe:
+def update_equipe(session: Session, equipe_id: int, equipe_update: Equipe) -> Equipe:
     equipe = session.get(Equipe, equipe_id)
     if not equipe:
         return None
     
-    equipe_data = equipe.model_dump(exclude_unset=True)
+    equipe_data = equipe_update.model_dump(exclude_unset=True)
     for key, value in equipe_data.items():
         setattr(equipe, key, value)
-    
-    session.add(equipe_data)
+
+    session.add(equipe)
     session.commit()
-    session.refresh(equipe_data)
-    return equipe_data
+    session.refresh(equipe) 
+    return equipe 
+
 

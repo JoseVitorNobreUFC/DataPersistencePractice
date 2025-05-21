@@ -29,7 +29,7 @@ def deletar_membro(membro_id: int, session: Session = Depends(get_session)):
 
 @router.put("/{membro_id}", response_model=Membro)
 def atualizar_membro(membro_id: int, membro: Membro, session: Session = Depends(get_session)):
-    membro_atualizado = membro_service.update_membro(session, membro_id, membro.dict(exclude_unset=True))
+    membro_atualizado = membro_service.update_membro(session, membro_id, membro)
     if not membro_atualizado:
         raise HTTPException(status_code=404, detail="Membro não encontrado")
     return membro_atualizado

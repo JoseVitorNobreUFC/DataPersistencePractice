@@ -21,16 +21,16 @@ def delete_membro(session: Session, membro_id: int) -> bool:
         return True
     return False
 
-def update_membro(session: Session, membro_id: int, membro_data: dict) -> Membro:
+def update_membro(session: Session, membro_id: int, membro_update: Membro) -> Membro:
     membro = session.get(Membro, membro_id)
     if not membro:
-        return None  # ou lançar um erro
+        return None
 
-    membro_data = membro.model_dump(exclude_unset=True)
+    membro_data = membro_update.model_dump(exclude_unset=True)
     for key, value in membro_data.items():
         setattr(membro, key, value)
 
-    session.add(membro_data)
+    session.add(membro)
     session.commit()
-    session.refresh(membro_data)
-    return membro_data
+    session.refresh(membro)
+    return membro
