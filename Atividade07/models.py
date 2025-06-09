@@ -5,7 +5,7 @@ from sqlalchemy import Column, String
 class Autor(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     nome: str
-    email: Optional[str] = Field(default=None, index=True)
+    cpf: Optional[str] = Field(default=None, sa_column=Column(String)) # Removi unique pois dá erro no SQLite
     email: Optional[str] = Field(
         default=None,
         sa_column=Column(String, index=True)  # GARANTE index e tipo correto!
